@@ -27,8 +27,10 @@ function swapVideos() {
 		if (!noText) {
 			let content = $(".content");
 			content.animate({left: '-50px', bottom: '-130px'}, 500, "easeInBack", function () {
-				$("#author")[0].innerText = object.results[i % object.results.length].username;
-				content.animate({left: '0px', bottom: '0px'}, 500, "easeOutBack")
+				if (object.results[i % object.results.length].username !== "") {
+					$("#author")[0].innerText = object.results[i % object.results.length].username;
+					content.animate({left: '0px', bottom: '0px'}, 500, "easeOutBack")
+				}
 			})
 		}
 	});
