@@ -4,10 +4,18 @@ $(".form").on("submit", function (event) {
 		let submit = $(".submit");
 		if (data === "OK") {
 			submit.attr("value", "Sent!");
-			submit.css("background-color", "rgba(3, 255, 62, 0.3)");
+			submit.animate({backgroundColor: "rgba(3, 255, 62, 0.3)"}, 500, function(){
+				$(this).delay(3000).animate({backgroundColor: "rgba(0, 0, 0, 0.3)"}, 500, function () {
+					$(this).attr("value", "Submit");
+				})
+			})
 		} else {
 			submit.attr("value", `Error: ${data}`);
-			submit.css("background-color", "rgba(255,22,39,0.3)");
+			submit.animate({backgroundColor: "rgba(255,22,39,0.3)"}, 500, function(){
+				$(this).delay(3000).animate({backgroundColor: "rgba(0, 0, 0, 0.3)"}, 500, function () {
+					$(this).attr("value", "Submit");
+				})
+			})
 		}
 	});
 	return false;
