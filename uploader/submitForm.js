@@ -1,6 +1,8 @@
 $(".form").on("submit", function (event) {
 	event.preventDefault();
-	$.post("../api/api.php", $(this).serialize(), function (data) {
+	if(selectedGif == null) return false;
+	let data = `username=${$('#username').val()}&url=${selectedGif.images.original_mp4.mp4}`;
+	$.post("../api/api.php", data, function (data) {
 		let submit = $(".submit");
 		if (data === "OK") {
 			submit.attr("value", "Sent!");
@@ -19,4 +21,4 @@ $(".form").on("submit", function (event) {
 		}
 	});
 	return false;
-})
+});

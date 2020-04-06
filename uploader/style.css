@@ -23,7 +23,7 @@ html {
 }
 
 .back {
-    backdrop-filter: blur(4px);
+    backdrop-filter: blur(12px);
     padding: 64px;
     border-radius: 32px;
     background-color: rgba(0, 0, 0, 0.3);
@@ -104,7 +104,7 @@ h1 {
     margin: 8px;
 }
 
-video {
+#videoDiv > video {
     z-index: -1;
     position: fixed;
     right: 0;
@@ -122,4 +122,35 @@ video {
     color: #ffffff;
     font-size: 2em;
     font-family: "Shadows Into Light", cursive;
+}
+
+#gif-results {
+    position: relative;
+    white-space: nowrap;
+    overflow: hidden;
+    scrollbar-x: bottom;
+    margin: 16px 0;
+    background-color: rgba(255, 255, 255, 0.6);
+    border-radius: 8px;
+}
+
+.gif-result {
+    display: inline-block;
+    backdrop-filter: blur(12px);
+    background-color: rgba(0, 0, 0, 0.5);
+    margin: 16px;
+    height: 100px;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.gif-result > img {
+    position: absolute;
+    margin: auto;
+    top: 0; left: 0; right: 0; bottom: 0;
+    z-index: 1000;
+}
+
+.gif-result > video {
+
 }

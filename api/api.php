@@ -15,7 +15,7 @@
 	}
 	
 	function isGiphy($url){
-		return strpos($url, "https://media.giphy.com/media/") !== false;
+		return strpos($url, "giphy.com/media/") !== false;
 	}
 	
 	function badRequest($str)
@@ -40,7 +40,7 @@
 		}
 		$url = $_POST['url'];
 		if (!filter_var($url, FILTER_VALIDATE_URL)) {
-			badRequest("Invalid URL");
+			badRequest("Invalid URL : $url");
 		}
 		if (!isGiphy($url)){
 			badRequest("Not from GIPHY");
