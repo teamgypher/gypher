@@ -74,7 +74,7 @@ function doneTyping() {
 				$("#tick-icon").remove();
 				$(".shadowed").css("filter", "").removeClass("shadowed");
 				$(this).css("filter", "contrast(30%)").addClass("shadowed").parent().append("<img id='tick-icon' src=\"check.svg\" alt=\"selected\" height='64px' width='64px'>");
-				selectedGif = data[$(this).parent().index()];
+				selectedGif = data[$(this).parent().index(".gif-result")];
 				redField(false);
 				return false;
 			})
