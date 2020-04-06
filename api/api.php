@@ -1,31 +1,30 @@
 <?php
+	$LIMIT_SEARCH = 20;
 	$IP_LIMIT = 10;
 	
 	$dbcon = mysqli_connect("localhost", "root", "", "socialdistancing");
 	
-	function isVideo($url){
-		$url = get_headers($url,1);
-		if(is_array($url['Content-Type'])){ //In some responses Content-type is an array
+	function isVideo($url) {
+		$url = get_headers($url, 1);
+		if (is_array($url['Content-Type'])) { //In some responses Content-type is an array
 			$video = $url['Content-Type'][1] == 'video/mp4';
-		}else{
+		} else {
 			$video = $url['Content-Type'] == 'video/mp4';
 		}
 		
 		return $video;
 	}
 	
-	function isGiphy($url){
+	function isGiphy($url) {
 		return strpos($url, "giphy.com/media/") !== false;
 	}
 	
-	function badRequest($str)
-	{
+	function badRequest($str) {
 		echo $str;
 		exit();
 	}
 	
-	function serverError($str)
-	{
+	function serverError($str) {
 		echo $str;
 		exit();
 	}
@@ -42,30 +41,37 @@
 		if (!filter_var($url, FILTER_VALIDATE_URL)) {
 			badRequest("Invalid URL : $url");
 		}
-		if (!isGiphy($url)){
+		if (!isGiphy($url)) {
 			badRequest("Not from GIPHY");
 		}
-		if (!isVideo($url)){
+		if (!isVideo($url)) {
 			badRequest("Not an MP4");
 		}
 		
-		$dbquery = "SELECT ip FROM gifs ORDER BY i DESC LIMIT 10;";
+		$dbquery = "SELECT ip, url FROM gifs ORDER BY i DESC LIMIT $LIMIT_SEARCH;";
 		$result = $dbcon->query($dbquery);
 		$count = 0;
+		$present = false;
 		while ($row = $result->fetch_assoc()) {
 			if ($row['ip'] == $ip) {
 				$count++;
 			}
+			if ($row['url'] == $url) {
+				$present = true;
+			}
 		}
 		if ($count > $IP_LIMIT) {
 			badRequest("Too many requests");
+		}
+		if ($present) {
+			badRequest("Already in database");
 		}
 		
 		$dbquery = "INSERT INTO gifs VALUES (null, ?, ?, ?)";
 		$dbquery = $dbcon->prepare($dbquery);
 		$dbquery->bind_param("sss", $_POST['url'], $_POST['username'], $ip);
 		if (!$dbquery->execute()) {
-			serverError("Already in database");
+			serverError("Database error");
 		}
 		echo "OK";
 	} elseif ($_SERVER['REQUEST_METHOD'] == 'GET') {
