@@ -34,6 +34,8 @@
 												 placeholder="Username"><br>
 			<label for="gif-search"></label><input required class="size3" type="text" id="gif-search" name="url"
 												   placeholder="Search for a gif..." autocomplete="off"><br>
+			<img src="giphy-logo.png" height="26"
+				 width="200" style="float: right" alt="Powered by GIPHY"/><br>
 			<div id="gif-results" hidden></div>
 			<input class="submit" type="submit" value="Add">
 		</form>
@@ -64,15 +66,22 @@
 	});
 	
 	let currentSubmitState = true;
+	
 	function redField(red, duration = 500) {
 		const submitButton = $(".submit");
 		if (red === true && currentSubmitState === true) {
-			submitButton.animate({backgroundColor: "rgba(255, 22, 39, 0.3)", color: "rgba(255, 255, 255, 0.0)"}, duration, function () {
+			submitButton.animate({
+				backgroundColor: "rgba(255, 22, 39, 0.3)",
+				color: "rgba(255, 255, 255, 0.0)"
+			}, duration, function () {
 				submitButton.attr("value", "Select a GIF...").animate({color: "rgba(255, 255, 255, 1)"}, duration);
 			});
 			currentSubmitState = false;
 		} else if (red === false && currentSubmitState === false) {
-			submitButton.animate({backgroundColor: "rgba(0, 0, 0, 0.3)", color: "rgba(255, 255, 255, 0.0)"}, duration, function () {
+			submitButton.animate({
+				backgroundColor: "rgba(0, 0, 0, 0.3)",
+				color: "rgba(255, 255, 255, 0.0)"
+			}, duration, function () {
 				submitButton.attr("value", "Submit").animate({color: "rgba(255, 255, 255, 1)"}, duration);
 			});
 			currentSubmitState = true;
