@@ -1,6 +1,6 @@
 $(".form").on("submit", function (event) {
 	event.preventDefault();
-	if(selectedGif == null) return;
+	if(selectedGif == null) return false;
 	let data = `username=${$('#username').val()}&url=${selectedGif.images.original_mp4.mp4}`;
 	$.post("../api/api.php", data, function (data) {
 		let submit = $(".submit");
@@ -21,4 +21,4 @@ $(".form").on("submit", function (event) {
 		}
 	});
 	return false;
-})
+});
