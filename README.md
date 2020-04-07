@@ -34,6 +34,6 @@ API which interfaces with the MySQL database. Replace with your credentials to y
 
 (c) defvs and AbstractAmcr - All Rights Reserved
 
-You may not use or distribute this software without my permission. You are allowed to view and fork the code as per Github's rules. But you cannot use it for yourself.
+You may not use or distribute this software without my permission, in any situation where you can make money out of it (streaming included if you do that commercially). You are allowed to view and fork the code as per Github's rules, and use it for testing purposes. But you cannot use it for your stream if you earn money out of that.
 
-Please contact me for case-by-case licensing, I may allow limited licenses if you are a streamer who wants to use the software for himself. I am more than welcome to help you.
+Please contact me for case-by-case licensing, I may allow limited licenses if you are a streamer who wants to use the software for yourself. I am more than welcome to help you.
