@@ -1,9 +1,19 @@
-video {
+#videoDiv {
+    overflow: hidden;
     position: fixed;
+    top: 0;
     right: 0;
     bottom: 0;
-    min-width: 100%;
-    min-height: 100%;
+    left: 0;
+}
+
+#videoDiv > video {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    object-fit: cover;
 }
 
 .content {
@@ -15,4 +25,8 @@ video {
     color: #ffffff;
     font-size: 2em;
     font-family: "Shadows Into Light", cursive;
+}
+
+html, body, #videoDiv {
+    background-color: transparent;
 }

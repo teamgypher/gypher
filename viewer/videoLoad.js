@@ -3,6 +3,12 @@ const duration = searchParams.has('duration') ? searchParams.get('fade') : 10000
 const fadeDuration = searchParams.has('fade') ? searchParams.get('fade') : 1000;
 const noText = searchParams.has('notext');
 const limit = searchParams.has('limit') ? searchParams.get('limit') : 10;
+if (searchParams.has('viewport')){
+	viewportIndex = ["fill", "stretch", "center"].indexOf(searchParams.get('viewport'));
+	if (viewportIndex > -1){
+		$("#videoDiv > video").css("object-fit", ["cover", "fill", "contain"][viewportIndex]);
+	}
+}
 
 let i = 0;
 
