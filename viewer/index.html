@@ -11,10 +11,18 @@
 </head>
 <body>
 <div id="videoDiv">
-	<video autoplay muted loop id="video0">
+	<div id="blurVideoDiv" hidden>
+		<video autoplay muted loop class="video0">
+			<source src="" type="video/mp4">
+		</video>
+		<video autoplay muted loop class="video1">
+			<source src="" type="video/mp4">
+		</video>
+	</div>
+	<video autoplay muted loop class="video0">
 		<source src="" type="video/mp4">
 	</video>
-	<video autoplay muted loop id="video1">
+	<video autoplay muted loop class="video1">
 		<source src="" type="video/mp4">
 	</video>
 </div>
