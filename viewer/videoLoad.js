@@ -9,6 +9,9 @@ if (searchParams.has('viewport')){
 		$("#videoDiv > video").css("object-fit", ["cover", "fill", "contain"][viewportIndex]);
 	}
 }
+if (searchParams.has('background')){
+	$("html, body, #videoDiv").css("background-color", searchParams.get('background'));
+}
 
 let i = 0;
 
