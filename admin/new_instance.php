@@ -30,7 +30,7 @@
 		if (!($dbquery->bind_param("ss", $username, $ip))) httpThrow(500);
 		if (!($dbquery->execute())) {
 			if ($dbquery->errno == 1062)
-				httpThrow(409, "User already exists: $dbquery->error");
+				httpThrow(409, "User already exists");
 			else httpThrow(500);
 		}
 		$dbquery->close();
