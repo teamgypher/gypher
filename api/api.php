@@ -19,37 +19,30 @@
 		return strpos($url, "giphy.com/media/") !== false;
 	}
 	
-	function badRequest($str) {
-		echo $str;
-		exit();
-	}
-	
-	function serverError($str) {
-		echo $str;
-		exit();
+	function httpThrow($code = 200, $response = "") {
+		http_response_code($code);
+		if ($response != "") echo $response;
+		exit;
 	}
 	
 	if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-		if (!(isset($_POST) && isset($_POST['username']) && isset($_POST['url']))) {
-			badRequest("Missing Arguments");
+		if (!(isset($_POST)
+			&& isset($_POST['username'])
+			&& isset($_POST['url']))) {
+			httpThrow(400, "Missing Arguments");
 		}
+		
 		$ip = $_SERVER['REMOTE_ADDR'];
-		if (!filter_var($ip, FILTER_VALIDATE_IP)) {
-			badRequest("Too many requests");
-		}
+		if (!filter_var($ip, FILTER_VALIDATE_IP)) httpThrow(429, "Too many requests");
+		
 		$url = $_POST['url'];
-		if (!filter_var($url, FILTER_VALIDATE_URL)) {
-			badRequest("Invalid URL : $url");
-		}
-		if (!isGiphy($url)) {
-			badRequest("Not from GIPHY");
-		}
-		if (!isVideo($url)) {
-			badRequest("Not an MP4");
-		}
+		if (!filter_var($url, FILTER_VALIDATE_URL)) httpThrow(400, "Invalid URL : $url");
+		if (!isGiphy($url)) httpThrow(400, "Not from GIPHY");
+		if (!isVideo($url)) httpThrow(400, "Not an MP4");
 		
 		$dbquery = "SELECT ip, url FROM gifs ORDER BY i DESC LIMIT $LIMIT_SEARCH;";
 		$result = $dbcon->query($dbquery);
+		
 		$count = 0;
 		$present = false;
 		while ($row = $result->fetch_assoc()) {
@@ -60,32 +53,29 @@
 				$present = true;
 			}
 		}
-		if ($count > $IP_LIMIT) {
-			badRequest("Too many requests");
-		}
-		if ($present) {
-			badRequest("Already in database");
-		}
+		
+		if ($count > $IP_LIMIT) httpThrow(429, "Too many requests");
+		if ($present) httpThrow(429, "Already in database");
 		
 		$dbquery = "INSERT INTO gifs VALUES (null, ?, ?, ?)";
 		$dbquery = $dbcon->prepare($dbquery);
 		$dbquery->bind_param("sss", $_POST['url'], $_POST['username'], $ip);
-		if (!$dbquery->execute()) {
-			serverError("Database error");
-		}
-		echo "OK";
+		if (!$dbquery->execute()) httpThrow(500, "Database error");
+		
+		httpThrow(); // OK
+		
 	} elseif ($_SERVER['REQUEST_METHOD'] == 'GET') {
+		
 		$obj = new stdClass();
+		
 		$limit = isset($_GET['limit']) ? $_GET['limit'] : 10;
 		if ($limit == 0) {
-			$dbquery = "SELECT url, username FROM gifs ORDER BY i DESC";
+			$dbquery = "SELECT url, username FROM gifs ORDER BY i DESC"; // Get all
 		} else {
-			$dbquery = "SELECT url, username FROM gifs ORDER BY i DESC LIMIT $limit";
+			$dbquery = "SELECT url, username FROM gifs ORDER BY i DESC LIMIT $limit"; // Get last $limit
 		}
 		if (!$result = $dbcon->query($dbquery)) {
-			http_response_code(500);
-			echo "500 Internal Server Error";
-			exit();
+			httpThrow(500);
 		}
 		
 		$i = 0;
@@ -95,8 +85,7 @@
 		}
 		
 		header("Content-Type: application/json", true);
-		http_response_code(200);
-		echo json_encode($obj);
+		httpThrow(200, json_encode($obj));
 	}
 	
 	mysqli_close($dbcon);
