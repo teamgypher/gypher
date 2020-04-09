@@ -1,0 +1,36 @@
+### Test requests for new_instance.php
+
+### "No content" --> 400
+POST http://localhost/phpstorm/admin/new_instance.php
+Content-Type: application/x-www-form-urlencoded
+
+
+###
+
+### "Missing username" --> 400
+POST http://localhost/phpstorm/admin/new_instance.php
+Content-Type: application/x-www-form-urlencoded
+
+ip=::1
+###
+
+### "Missing ip" --> 400
+POST http://localhost/phpstorm/admin/new_instance.php
+Content-Type: application/x-www-form-urlencoded
+
+username=defvs
+###
+
+### "Malformed ip" --> 400
+POST http://localhost/phpstorm/admin/new_instance.php
+Content-Type: application/x-www-form-urlencoded
+
+username=defvs&ip=thisisnotanipatall
+###
+
+### Good request --> 201 Namespace created at [namespace]
+POST http://localhost/phpstorm/admin/new_instance.php
+Content-Type: application/x-www-form-urlencoded
+
+username=defvs&ip=::1
+###
