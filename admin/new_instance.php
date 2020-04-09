@@ -37,7 +37,8 @@
 		
 		
 		// Create user's namespace (table)
-		$dbquery = "CREATE TABLE `$username` LIKE gifs";
+		$escaped = $dbcon->escape_string($username);
+		$dbquery = "CREATE TABLE `$escaped` LIKE gifs";
 		
 		if (!($dbcon->query($dbquery))){
 			if ($dbcon->errno == 1050)
