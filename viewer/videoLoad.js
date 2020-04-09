@@ -1,8 +1,11 @@
-let searchParams = new URLSearchParams(window.location.search);
+searchParams = new URLSearchParams(window.location.search);
 const duration = searchParams.has('duration') ? searchParams.get('fade') : 10000;
 const fadeDuration = searchParams.has('fade') ? searchParams.get('fade') : 1000;
 const noText = searchParams.has('notext');
 const limit = searchParams.has('limit') ? searchParams.get('limit') : 10;
+
+const instance = searchParams.has('inst') ? searchParams.get('inst') : "gifs";
+
 let background = false;
 if (searchParams.has('viewport')){
 	const viewport = searchParams.get('viewport');
@@ -30,7 +33,7 @@ if (noText) {
 }
 
 function swapVideos() {
-	$.getJSON(`../api/api.php?limit=${limit}`, function (object) {
+	$.getJSON(`../api/api.php?limit=${limit}&inst=${instance}`, function (object) {
 		let currentSource = $(`.video${i % 2} source`);
 		let nextSource = $(`.video${(i + 1) % 2} source`);
 		

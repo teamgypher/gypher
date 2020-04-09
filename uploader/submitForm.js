@@ -1,7 +1,10 @@
+searchParams = new URLSearchParams(window.location.search);
+const instance = searchParams.has('inst') ? searchParams.get('inst') : "gifs";
+
 $(".form").on("submit", function (event) {
 	event.preventDefault();
 	if (selectedGif == null) return false;
-	let data = `username=${$('#username').val()}&url=${selectedGif.images.original_mp4.mp4}`;
+	let data = `username=${$('#username').val()}&url=${selectedGif.images.original_mp4.mp4}&inst=${instance}`;
 	
 	let submit = $(".submit");
 	$.ajax("../api/api.php", {
