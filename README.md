@@ -16,11 +16,24 @@ Tool to fetch and view GIFs from the database. Reserved for the streamer. Can be
 
 - ``fade``: Duration in milliseconds between two gifs fading. Default 1000ms.
 
-- ``duration``: Duration in milliseconds each gif will be shown. Default 10000
+- ``duration``: Duration in milliseconds each gif will be shown. Default 10000ms
 
 - ``limit``: Quantity of gifs to show. Last X gifs in the database will be shown. Default 10.
 
 - ``notext``: Add this flag to hide the bottom text.
+
+- ``viewport``
+
+  - ``fill`` will resize the gif without changing it's ratio to fill the screen
+  
+  - ``stretch`` will resize the gif by changing it's width & height independently to fill the screen
+  
+  - ``center``
+  
+    - You can add the ``background`` flag to specify a color for the "black bars", or put ``blur`` to use a blurred 
+    version of the video. Default is 'transparent' (= can be used in OBS with transparency)
+  
+
 
 ### _uploader_
 
