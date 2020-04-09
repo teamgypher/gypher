@@ -28,7 +28,8 @@
 	if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		if (!(isset($_POST)
 			&& isset($_POST['username'])
-			&& isset($_POST['url']))) {
+			&& isset($_POST['url'])
+			&& isset($_POST['inst']))) {
 			httpThrow(400, "Missing Arguments");
 		}
 		
@@ -40,7 +41,8 @@
 		if (!isGiphy($url)) httpThrow(400, "Not from GIPHY");
 		if (!isVideo($url)) httpThrow(400, "Not an MP4");
 		
-		$dbquery = "SELECT ip, url FROM gifs ORDER BY i DESC LIMIT $LIMIT_SEARCH;";
+		$inst = $dbcon->escape_string($_POST['inst']);
+		$dbquery = "SELECT ip, url FROM `$inst` ORDER BY i DESC LIMIT $LIMIT_SEARCH;";
 		$result = $dbcon->query($dbquery);
 		
 		$count = 0;
@@ -57,7 +59,7 @@
 		if ($count > $IP_LIMIT) httpThrow(429, "Too many requests");
 		if ($present) httpThrow(429, "Already in database");
 		
-		$dbquery = "INSERT INTO gifs VALUES (null, ?, ?, ?)";
+		$dbquery = "INSERT INTO `$inst` VALUES (null, ?, ?, ?)";
 		$dbquery = $dbcon->prepare($dbquery);
 		$dbquery->bind_param("sss", $_POST['url'], $_POST['username'], $ip);
 		if (!$dbquery->execute()) httpThrow(500, "Database error");
@@ -65,14 +67,16 @@
 		httpThrow(); // OK
 		
 	} elseif ($_SERVER['REQUEST_METHOD'] == 'GET') {
+		if (!isset($_GET['inst'])) httpThrow(400, "Missing instance name");
 		
 		$obj = new stdClass();
 		
+		$inst = $dbcon->escape_string($_POST['inst']);
 		$limit = isset($_GET['limit']) ? $_GET['limit'] : 10;
 		if ($limit == 0) {
-			$dbquery = "SELECT url, username FROM gifs ORDER BY i DESC"; // Get all
+			$dbquery = "SELECT url, username FROM `$inst` ORDER BY i DESC"; // Get all
 		} else {
-			$dbquery = "SELECT url, username FROM gifs ORDER BY i DESC LIMIT $limit"; // Get last $limit
+			$dbquery = "SELECT url, username FROM `$inst` ORDER BY i DESC LIMIT $limit"; // Get last $limit
 		}
 		if (!$result = $dbcon->query($dbquery)) {
 			httpThrow(500);
