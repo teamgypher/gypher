@@ -6,10 +6,14 @@ username=defvs&url=https://media.giphy.com/media/YTPp28PKl42ootr8sR/giphy.mp4
 
 ###
 
-### "Good" request
+### "Good" POST request
 POST http://localhost/phpstorm/api/api.php
 Content-Type: application/x-www-form-urlencoded
 
-username=defvs&url=https://media.giphy.com/media/YTPp28PKl42ootr8sR/giphy.mp4&inst=defvs
+username=defvs&url=https://media.giphy.com/media/YTPp28PKl42ootr8sR/giphy.mp4&inst=gifs
 
+###
+
+### "Good" GET request
+GET http://localhost/phpstorm/api/api.php?inst=gifs
 ###

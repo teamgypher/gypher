@@ -71,7 +71,7 @@
 		
 		$obj = new stdClass();
 		
-		$inst = $dbcon->escape_string($_POST['inst']);
+		$inst = $dbcon->escape_string($_GET['inst']);
 		$limit = isset($_GET['limit']) ? $_GET['limit'] : 10;
 		if ($limit == 0) {
 			$dbquery = "SELECT url, username FROM `$inst` ORDER BY i DESC"; // Get all
