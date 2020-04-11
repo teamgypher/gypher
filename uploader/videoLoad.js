@@ -4,8 +4,6 @@ const fadeDuration = searchParams.has('fade') ? searchParams.get('fade') : 1000;
 const noText = searchParams.has('notext');
 const limit = searchParams.has('limit') ? searchParams.get('limit') : 10;
 
-const instance = searchParams.has('inst') ? searchParams.get('inst') : "gifs";
-
 i = 0;
 
 if (noText) {

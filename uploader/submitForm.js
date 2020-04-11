@@ -1,6 +1,3 @@
-searchParams = new URLSearchParams(window.location.search);
-const instance = searchParams.has('inst') ? searchParams.get('inst') : "gifs";
-
 $(".form").on("submit", function (event) {
 	event.preventDefault();
 	if (selectedGif == null) return false;
