@@ -29,6 +29,7 @@
 <div class="content">
 	<p>Submitted by: <span id="author"></span></p>
 </div>
+<script>const instance = "<?php echo isset($_GET['inst']) ? $_GET['inst'] : "gifs"?>";</script>
 <script src="videoLoad.js"></script>
 </body>
 </html>
