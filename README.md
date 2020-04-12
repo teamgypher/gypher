@@ -33,6 +33,7 @@ Tool to fetch and view GIFs from the database. Reserved for the streamer. Can be
     - You can add the ``background`` flag to specify a color for the "black bars", or put ``blur`` to use a blurred 
     version of the video. Default is 'transparent' (= can be used in OBS with transparency)
   
+- ``inst``: which instance to send and receive gifs from. Default instance is gifs.
 
 
 ### _uploader_
