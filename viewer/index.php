@@ -29,7 +29,15 @@
 <div class="content">
 	<p>Submitted by: <span id="author"></span></p>
 </div>
-<script>const instance = "<?php echo isset($_GET['inst']) ? $_GET['inst'] : "gifs"?>";</script>
+<script> // Consts
+	const instance = "<?php echo isset($_GET['inst']) ? $_GET['inst'] : "gifs"?>";
+	
+	searchParams = new URLSearchParams(window.location.search);
+	const duration = searchParams.has('duration') ? searchParams.get('fade') : 10000;
+	const fadeDuration = searchParams.has('fade') ? searchParams.get('fade') : 1000;
+	const noText = searchParams.has('notext');
+	const limit = searchParams.has('limit') ? searchParams.get('limit') : 10;
+</script>
 <script src="videoLoad.js"></script>
 </body>
 </html>
