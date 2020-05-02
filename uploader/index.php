@@ -41,7 +41,7 @@
 		</form>
 	</div>
 </div>
-<script>const instance = "<?php echo isset($_GET['inst']) ? $_GET['inst'] : "gifs"?>";</script>
+<script>const instance = "<?php echo isset($_GET['inst']) ? strtolower($_GET['inst']) : "gifs"?>";</script>
 <script src="videoLoad.js"></script>
 <script src="submitForm.js"></script>
 <script src="giphySelector.js"></script>

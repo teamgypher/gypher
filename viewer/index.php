@@ -30,7 +30,7 @@
 	<p>Submitted by: <span id="author"></span></p>
 </div>
 <script> // Consts
-	const instance = "<?php echo isset($_GET['inst']) ? $_GET['inst'] : "gifs"?>";
+	const instance = "<?php echo isset($_GET['inst']) ? strtolower($_GET['inst']) : "gifs"?>";
 	
 	searchParams = new URLSearchParams(window.location.search);
 	const duration = searchParams.has('duration') ? searchParams.get('fade') : 10000;

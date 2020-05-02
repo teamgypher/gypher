@@ -16,7 +16,7 @@
 		if (!isset($_POST['username']) || strlen($_POST['username']) <= 3) {
 			httpThrow(400, "Username is too short");
 		}
-		$username = $_POST['username'];
+		$username = strtolower($_POST['username']);
 		
 		$ip = $_SERVER['REMOTE_ADDR'];
 		if (!filter_var($ip, FILTER_VALIDATE_IP)){
