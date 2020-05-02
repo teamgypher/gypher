@@ -25,6 +25,8 @@ function updateSettings() {
 	if (noText) {
 		$(".content").remove();
 	}
+	
+	$('.content').css("font-family", font).css("font-size", fontsize);
 }
 
 updateSettings();
