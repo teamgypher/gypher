@@ -1,8 +1,12 @@
+let background;
+let viewport;
+let viewportIndex
+
 function updateSettings() {
-	let background = false;
+	background = false;
 	if (searchParams.has('viewport')) {
-		const viewport = searchParams.get('viewport');
-		const viewportIndex = ["fill", "stretch", "center"].indexOf(viewport);
+		viewport = searchParams.get('viewport');
+		viewportIndex = ["fill", "stretch", "center"].indexOf(viewport);
 		
 		if (viewportIndex > -1) {
 			$("#videoDiv > video").css("object-fit", ["cover", "fill", "contain"][viewportIndex]);
