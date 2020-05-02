@@ -22,6 +22,10 @@ Tool to fetch and view GIFs from the database. Reserved for the streamer. Can be
 
 - ``notext``: Add this flag to hide the bottom text.
 
+- ``font``: Change font used for text. Must be installed on your computer.
+
+- ``fontsize``: Text size. Can be any CSS unit. Use ``em`` for constant size or ``vmax`` / ``vmin`` for font sizes that changes with the width and height of your browser (responsive)
+
 - ``viewport``
 
   - ``fill`` will resize the gif without changing it's ratio to fill the screen
