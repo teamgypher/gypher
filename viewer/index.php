@@ -38,8 +38,7 @@
 	const noText = searchParams.has('notext');
 	const limit = searchParams.has('limit') ? searchParams.get('limit') : 10;
 	const font = searchParams.has('font') ? searchParams.get('font') : null;
-	
-	$('.content').css("font-family", font);
+	const fontsize = searchParams.has('fontsize') ? searchParams.get('fontsize') : "3vmax";
 </script>
 <script src="videoLoad.js"></script>
 </body>

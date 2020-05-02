@@ -49,10 +49,10 @@ function swapVideos() {
 		
 		if (!noText) {
 			let content = $(".content");
-			content.animate({left: '-50px', bottom: '-130px'}, 500, "easeInBack", function () {
+			content.animate({left: '-150px', bottom: '-300px'}, 500, "easeInBack", function () {
 				if (object.results[i % object.results.length].username !== "") {
 					$("#author")[0].innerText = object.results[i % object.results.length].username;
-					content.animate({left: '0px', bottom: '0px'}, 500, "easeOutBack")
+					content.delay(100).animate({left: '0px', bottom: '0px'}, 500, "easeOutBack")
 				}
 			})
 		}

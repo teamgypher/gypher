@@ -19,7 +19,7 @@
 		$username = strtolower($_POST['username']);
 		
 		$ip = $_SERVER['REMOTE_ADDR'];
-		if (!filter_var($ip, FILTER_VALIDATE_IP)){
+		if (!filter_var($ip, FILTER_VALIDATE_IP)) {
 			httpThrow(400, "IP is invalid");
 		}
 		
@@ -40,7 +40,7 @@
 		$escaped = $dbcon->escape_string($username);
 		$dbquery = "CREATE TABLE `$escaped` LIKE gifs";
 		
-		if (!($dbcon->query($dbquery))){
+		if (!($dbcon->query($dbquery))) {
 			if ($dbcon->errno == 1050)
 				httpThrow(409, "User already exists");
 			else httpThrow(500);

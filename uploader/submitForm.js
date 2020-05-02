@@ -16,7 +16,7 @@ $(".form").on("submit", function (event) {
 		})
 	}, function (xhr, statusText, data) {
 		submit.attr("value", `Error: ${xhr.responseText}`);
-		submit.animate({backgroundColor: "rgba(255,22,39,0.3)"}, 500, function(){
+		submit.animate({backgroundColor: "rgba(255,22,39,0.3)"}, 500, function () {
 			$(this).delay(3000).animate({backgroundColor: "rgba(0, 0, 0, 0.3)"}, 500, function () {
 				$(this).attr("value", "Submit");
 			})

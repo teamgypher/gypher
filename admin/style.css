@@ -1,111 +1,114 @@
 * {
-    font-family: "Shadows Into Light", cursive;
-    color: white;
+	font-family: "Shadows Into Light", cursive;
+	color: white;
 }
 
 .centered {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 html, body, .centered {
-    height: 100%;
-    width: 100%;
-    overflow: hidden;
-    position: fixed;
-    left: 0;
-    top: 0;
+	height: 100%;
+	width: 100%;
+	overflow: hidden;
+	position: fixed;
+	left: 0;
+	top: 0;
 }
 
 html {
-    background-color: black;
+	background-color: black;
 }
 
 .back {
-    backdrop-filter: blur(12px);
-    padding: 64px;
-    border-radius: 32px;
-    background-color: rgba(0, 0, 0, 0.3);
-    width: 40%;
+	backdrop-filter: blur(12px);
+	padding: 64px;
+	border-radius: 32px;
+	background-color: rgba(0, 0, 0, 0.3);
+	width: 40%;
 }
 
 form input:not(.submit) {
-    background-color: transparent;
-    margin: 16px 0;
-    width: 100%;
-    padding: 8px;
-    border-color: transparent;
-    transition-property: border-bottom-color;
-    transition-duration: 0.5s;
-    font-family: 'Baloo Thambi 2', cursive;
+	background-color: transparent;
+	margin: 16px 0;
+	width: 100%;
+	padding: 8px;
+	border-color: transparent;
+	transition-property: border-bottom-color;
+	transition-duration: 0.5s;
+	font-family: 'Baloo Thambi 2', cursive;
 }
 
 form input:not(.submit):required {
-    box-shadow: none;
+	box-shadow: none;
 }
 
 form input:not(.submit):valid {
-    border-bottom-color: white;
+	border-bottom-color: white;
 }
 
 form input:not(.submit):invalid {
-    border-bottom-color: darkred;
+	border-bottom-color: darkred;
 }
 
 .size2 {
-    font-size: 2rem;
+	font-size: 2rem;
 }
 
 ::placeholder {
-    opacity: 60%;
+	opacity: 60%;
 }
 
 h1 {
-    color: white;
-    font-size: 3rem;
-    margin: 0;
-    text-align: center;
-    text-decoration: underline;
-    font-family: 'Baloo Thambi 2', cursive;
+	color: white;
+	font-size: 3rem;
+	margin: 0;
+	text-align: center;
+	text-decoration: underline;
+	font-family: 'Baloo Thambi 2', cursive;
 }
 
 .submit {
-    background-color: rgba(0, 0, 0, 0.3);
-    backdrop-filter: blur(8px);
-    border-radius: 10px;
-    padding: 2px 32px;
-    margin: 32px 0 0;
-    width: 100%;
-    font-size: 3rem;
-    border: 0;
-    font-family: 'Baloo Thambi 2', cursive;
+	background-color: rgba(0, 0, 0, 0.3);
+	backdrop-filter: blur(8px);
+	border-radius: 10px;
+	padding: 2px 32px;
+	margin: 32px 0 0;
+	width: 100%;
+	font-size: 3rem;
+	border: 0;
+	font-family: 'Baloo Thambi 2', cursive;
 }
 
 #videoDiv > video {
-    z-index: -1;
-    position: fixed;
-    right: 0;
-    bottom: 0;
-    min-width: 100%;
-    min-height: 100%;
+	z-index: -1;
+	position: fixed;
+	right: 0;
+	bottom: 0;
+	min-width: 100%;
+	min-height: 100%;
 }
 
 .gif-result {
-    display: inline-block;
-    backdrop-filter: blur(12px);
-    background-color: rgba(0, 0, 0, 0.5);
-    margin: 16px;
-    height: 100px;
-    border-radius: 8px;
-    overflow: hidden;
+	display: inline-block;
+	backdrop-filter: blur(12px);
+	background-color: rgba(0, 0, 0, 0.5);
+	margin: 16px;
+	height: 100px;
+	border-radius: 8px;
+	overflow: hidden;
 }
 
 .gif-result > img {
-    position: absolute;
-    margin: auto;
-    top: 0; left: 0; right: 0; bottom: 0;
-    z-index: 1000;
+	position: absolute;
+	margin: auto;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 1000;
 }
 
 .gif-result > video {
