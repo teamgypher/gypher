@@ -1,9 +1,9 @@
 <?php
-	function returnErrorJSON($code, $error, $message) {
+	function returnResultJSON($code, $error, $message) {
 		http_response_code($code);
 		header("Content-Type: application/json");
 		$obj = new stdClass();
-		$obj->error = $error;
+		$obj->result = $error;
 		$obj->message = $message;
 		echo json_encode($obj);
 		exit;
@@ -14,4 +14,10 @@
 		http_response_code($code);
 		echo json_encode($obj);
 		exit;
+	}
+	
+	function connectDB() {
+		if (!$dbcon = mysqli_connect("localhost", "root", "", "socialdistancing"))
+			returnResultJSON(500, "database-error", "Database error");
+		return $dbcon;
 	}

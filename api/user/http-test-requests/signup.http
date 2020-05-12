@@ -2,9 +2,9 @@ POST http://localhost/phpstorm/api/user/signup.php
 Content-Type: application/json
 
 {
-  "username": "user",
-  "email": "user@email.com",
-  "password": "password"
+  "username": "defvs",
+  "email": "defvs@gmail.com",
+  "password": "thisismypassword"
 }
 
 ###
