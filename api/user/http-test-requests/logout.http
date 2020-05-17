@@ -1,0 +1,4 @@
+GET http://localhost/phpstorm/api/user/logout.php
+Accept: application/json
+
+###

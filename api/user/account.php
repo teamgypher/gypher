@@ -1,6 +1,9 @@
 <?php
-	session_name("connect.sid");
+	session_name("connectsid");
 	session_start();
+	
+	include "../megafunctions.php";
+	
 	
 	$response = (object)[];
 	
@@ -9,16 +12,18 @@
 			$response->logged = false;
 		} else {
 			$dbcon = connectDB();
-			$dbquery = "SELECT settings FROM `logins` WHERE username = {$_SESSION['username']}";
-			$dbquery = $dbcon->query($dbquery);
-			$settings = json_decode($dbquery->fetch_assoc()['settings']);
+			$dbquery = "SELECT settings FROM `logins` WHERE username = ?";
+			$dbquery = $dbcon->prepare($dbquery);
+			$dbquery->bind_param("s", $_SESSION['username']);
+			$dbquery->execute();
+			$settings = json_decode($dbquery->get_result()->fetch_assoc()['settings']);
 			
 			$response = (object)array(
-				"session" => (object)array(
+				"session" => array(
 					"username" => $_SESSION['username']
 				),
 				"logged" => true,
-				"links" => (object)array(
+				"links" => array(
 					"submit-form" => "https://gif.defvs.dev/{$_SESSION['username']}/",
 					"viewer-default" => "https://gif.defvs.dev/{$_SESSION['username']}/dviewer/",
 					"viewer-custom" => "https://gif.defvs.dev/{$_SESSION['username']}/viewer/"
@@ -26,7 +31,7 @@
 				"viewer-settings" => $settings
 			);
 		}
-		returnJSON(200, $response);
+		returnOBJ(200, $response);
 	} else if ($_SERVER['REQUEST_METHOD'] == "PATCH") {
 		if ($_SERVER["CONTENT_TYPE"] != "application/json")
 			returnResultJSON(400, "invalid-data", "Data should be a JSON.");

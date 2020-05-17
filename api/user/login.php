@@ -1,7 +1,7 @@
 <?php
 	include "../megafunctions.php";
 	
-	session_name("connect.sid");
+	session_name("connectsid");
 	session_start();
 	
 	if ($_SERVER['REQUEST_METHOD'] != 'POST') { // LOGIN
@@ -35,6 +35,6 @@
 		returnResultJSON(400, "wrong-credentials", "Wrong credentials.");
 	} else {
 		$_SESSION['logged'] = true;
-		$_SESSION['user'] = $username;
+		$_SESSION['username'] = $username;
 		returnResultJSON(200, "login-success", "You are now logged in.");
 	}

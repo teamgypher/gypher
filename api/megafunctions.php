@@ -9,10 +9,17 @@
 		exit;
 	}
 	
-	function returnJSON($code, $obj) {
+	function returnOBJ($code, $obj) {
 		header("Content-Type: application/json");
 		http_response_code($code);
 		echo json_encode($obj);
+		exit;
+	}
+	
+	function returnJSON($code, $JSONstr) {
+		header("Content-Type: application/json");
+		http_response_code($code);
+		echo $JSONstr;
 		exit;
 	}
 	
