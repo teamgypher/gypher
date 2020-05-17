@@ -25,8 +25,7 @@
 				"logged" => true,
 				"links" => array(
 					"submit-form" => "https://gif.defvs.dev/{$_SESSION['username']}/",
-					"viewer-default" => "https://gif.defvs.dev/{$_SESSION['username']}/dviewer/",
-					"viewer-custom" => "https://gif.defvs.dev/{$_SESSION['username']}/viewer/"
+					"viewer-url" => "https://gif.defvs.dev/{$_SESSION['username']}/viewer/"
 				),
 				"viewer-settings" => $settings
 			);
