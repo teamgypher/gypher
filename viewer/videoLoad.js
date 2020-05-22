@@ -34,7 +34,7 @@ updateSettings();
 let i = 0;
 
 function swapVideos() {
-	$.getJSON(`../api/api.php?limit=${limit}&inst=${instance}`, function (object) {
+	$.getJSON(`../api/gifs.php?limit=${limit}&inst=${instance}`, function (object) {
 		let currentSource = $(`.video${i % 2} source`);
 		let nextSource = $(`.video${(i + 1) % 2} source`);
 		

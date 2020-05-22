@@ -4,7 +4,7 @@ $(".form").on("submit", function (event) {
 	let data = `username=${$('#username').val()}&url=${selectedGif.images.original_mp4.mp4}&inst=${instance}`;
 	
 	let submit = $(".submit");
-	$.ajax("../api/api.php", {
+	$.ajax("../api/gifs.php", {
 		type: "POST",
 		data: data
 	}).then(function (data, statusText, xhr) {
