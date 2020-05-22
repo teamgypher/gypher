@@ -24,6 +24,8 @@
 		$password = $data['password'];
 	}
 	
+	$username = strtolower($username);
+	
 	$dbcon = connectDB();
 	
 	$dbquery = "SELECT pwhash FROM `logins` WHERE username = ?";
