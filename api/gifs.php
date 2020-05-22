@@ -37,9 +37,13 @@
 		if (!isGiphy($url)) returnResultJSON(400, "not-giphy", "Not from GIPHY");
 		if (!isVideo($url)) returnResultJSON(400, "not-mp4", "Not an MP4");
 		
-		$inst = $dbcon->escape_string($_POST['inst']);
-		$dbquery = "SELECT ip, url FROM `$inst` ORDER BY i DESC LIMIT $LIMIT_SEARCH;";
-		if (!$result = $dbcon->query($dbquery)) returnDatabaseError();
+		$inst = $_POST['inst'];
+		$dbquery = "SELECT ip, url FROM gifs WHERE `inst` = ? ORDER BY i DESC LIMIT $LIMIT_SEARCH";
+		
+		if (!$dbquery = $dbcon->prepare($dbquery)) returnDatabaseError();
+		if (!$dbquery->bind_param("s", $inst)) returnDatabaseError();
+		if (!$dbquery->execute()) returnDatabaseError();
+		if (!$result = $dbquery->get_result()) returnDatabaseError();
 		
 		$count = 0;
 		$present = false;
@@ -55,9 +59,9 @@
 		if ($count > $IP_LIMIT) returnResultJSON(429, "too-many-requests", "Too many requests");
 		if ($present) returnResultJSON(429, "already-exists", "Already in database");
 		
-		$dbquery = "INSERT INTO `$inst` VALUES (null, ?, ?, ?)";
+		$dbquery = "INSERT INTO gifs VALUES (NULL, ?, ?, ?, ?)";
 		if (!$dbquery = $dbcon->prepare($dbquery)) returnDatabaseError();
-		if (!$dbquery->bind_param("sss", $_POST['url'], $_POST['username'], $ip)) returnDatabaseError();
+		if (!$dbquery->bind_param("ssss", $_POST['url'], $_POST['username'], $ip, $inst)) returnDatabaseError();
 		if (!$dbquery->execute()) returnDatabaseError();
 		
 		returnResultJSON(200, "ok", "Gif submitted"); // OK
@@ -67,13 +71,15 @@
 		
 		$obj = new stdClass();
 		
-		$inst = $dbcon->escape_string($_GET['inst']);
+		$inst = $_GET['inst'];
 		$limit = isset($_GET['limit']) ? $_GET['limit'] : 10;
-		$dbquery = "SELECT url, username FROM `$inst` ORDER BY i DESC"; // Get all
-		if ($limit != 0) {
-			$dbquery .= " LIMIT $limit"; // Get last $limit
-		}
-		if (!$result = $dbcon->query($dbquery)) returnDatabaseError();
+		if ($limit == 0) $limit = 10;
+		$dbquery = "SELECT url, username FROM gifs WHERE `inst` = ? ORDER BY i DESC LIMIT ?";
+		
+		if (!$dbquery = $dbcon->prepare($dbquery)) returnDatabaseError();
+		if (!$dbquery->bind_param("si", $inst, $limit)) returnDatabaseError();
+		if (!$dbquery->execute()) returnDatabaseError();
+		if (!$result = $dbquery->get_result()) returnDatabaseError();
 		
 		$i = 0;
 		while ($row = $result->fetch_assoc()) {
