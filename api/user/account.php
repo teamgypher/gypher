@@ -4,19 +4,18 @@
 	
 	include "../megafunctions.php";
 	
-	
-	$response = (object)[];
-	
 	if ($_SERVER['REQUEST_METHOD'] == "GET") {
+		$response = (object)[];
 		if (!isset($_SESSION['username']) || !$_SESSION['logged'] || $_SESSION['username'] == null) {
 			$response->logged = false;
 		} else {
 			$dbcon = connectDB();
 			$dbquery = "SELECT settings FROM `logins` WHERE username = ?";
-			$dbquery = $dbcon->prepare($dbquery);
-			$dbquery->bind_param("s", $_SESSION['username']);
-			$dbquery->execute();
+			if (!$dbquery = $dbcon->prepare($dbquery)) returnDatabaseError();
+			if (!$dbquery->bind_param("s", $_SESSION['username'])) returnDatabaseError();
+			if (!$dbquery->execute()) returnDatabaseError();
 			$settings = json_decode($dbquery->get_result()->fetch_assoc()['settings']);
+			if ($settings == null) returnDatabaseError();
 			
 			$response = (object)array(
 				"session" => array(
@@ -42,15 +41,15 @@
 		$dbcon = connectDB();
 		if (isset($data->session->username)) {
 			$dbquery = "UPDATE `logins` SET username = ? WHERE username = {$_SESSION['username']}";
-			$dbquery = $dbcon->prepare($dbquery);
-			$dbquery->bind_param("s", $data->session->username);
-			$dbquery->execute();
+			if(!$dbquery = $dbcon->prepare($dbquery)) returnDatabaseError();
+			if(!$dbquery->bind_param("s", $data->session->username)) returnDatabaseError();
+			if(!$dbquery->execute()) returnDatabaseError();
 		}
 		if (isset($data->{"viewer-settings"})) {
 			$dbquery = "UPDATE `logins` SET settings = ? WHERE username = {$_SESSION['username']}";
-			$dbquery = $dbcon->prepare($dbquery);
-			$dbquery->bind_param("s", $data->{"viewer-settings"});
-			$dbquery->execute();
+			if(!$dbquery = $dbcon->prepare($dbquery)) returnDatabaseError();
+			if(!$dbquery->bind_param("s", $data->{"viewer-settings"})) returnDatabaseError();
+			if(!$dbquery->execute()) returnDatabaseError();
 		}
 		
 	} else if ($_SERVER['REQUEST_METHOD'] == "POST")
