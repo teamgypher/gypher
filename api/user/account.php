@@ -1,8 +1,8 @@
 <?php
+	include "../megafunctions.php";
+	
 	session_name("connectsid");
 	session_start();
-	
-	include "../megafunctions.php";
 	
 	if ($_SERVER['REQUEST_METHOD'] == "GET") {
 		$response = (object)[];

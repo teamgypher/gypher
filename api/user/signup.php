@@ -1,7 +1,7 @@
 <?php
 	include "../megafunctions.php";
 	
-	session_name("connect.sid");
+	session_name("connectsid");
 	session_start();
 	
 	if ($_SERVER['REQUEST_METHOD'] != 'POST') { // LOGIN
