@@ -1,8 +1,10 @@
 <?php
+	include "megafunctions.php";
+	
 	$LIMIT_SEARCH = 20;
 	$IP_LIMIT = 10;
 	
-	$dbcon = mysqli_connect("localhost", "root", "", "socialdistancing");
+	$dbcon = connectDB();
 	
 	function isVideo($url) {
 		$url = get_headers($url, 1);
@@ -19,31 +21,25 @@
 		return strpos($url, "giphy.com/media/") !== false;
 	}
 	
-	function httpThrow($code = 200, $response = "") {
-		http_response_code($code);
-		if ($response != "") echo $response;
-		exit;
-	}
-	
 	if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		if (!(isset($_POST)
 			&& isset($_POST['username'])
 			&& isset($_POST['url'])
 			&& isset($_POST['inst']))) {
-			httpThrow(400, "Missing Arguments");
+			returnResultJSON(400, "missing-arguments", "Missing Arguments");
 		}
 		
 		$ip = $_SERVER['REMOTE_ADDR'];
-		if (!filter_var($ip, FILTER_VALIDATE_IP)) httpThrow(429, "Too many requests");
+		if (!filter_var($ip, FILTER_VALIDATE_IP)) returnResultJSON(429, "too-many-requests", "Too many requests");
 		
 		$url = $_POST['url'];
-		if (!filter_var($url, FILTER_VALIDATE_URL)) httpThrow(400, "Invalid URL : $url");
-		if (!isGiphy($url)) httpThrow(400, "Not from GIPHY");
-		if (!isVideo($url)) httpThrow(400, "Not an MP4");
+		if (!filter_var($url, FILTER_VALIDATE_URL)) returnResultJSON(400, "invalid-url", "Invalid URL");
+		if (!isGiphy($url)) returnResultJSON(400, "not-giphy", "Not from GIPHY");
+		if (!isVideo($url)) returnResultJSON(400, "not-mp4", "Not an MP4");
 		
 		$inst = $dbcon->escape_string($_POST['inst']);
 		$dbquery = "SELECT ip, url FROM `$inst` ORDER BY i DESC LIMIT $LIMIT_SEARCH;";
-		$result = $dbcon->query($dbquery);
+		if (!$result = $dbcon->query($dbquery)) returnDatabaseError();
 		
 		$count = 0;
 		$present = false;
@@ -56,31 +52,28 @@
 			}
 		}
 		
-		if ($count > $IP_LIMIT) httpThrow(429, "Too many requests");
-		if ($present) httpThrow(429, "Already in database");
+		if ($count > $IP_LIMIT) returnResultJSON(429, "too-many-requests", "Too many requests");
+		if ($present) returnResultJSON(429, "already-exists", "Already in database");
 		
 		$dbquery = "INSERT INTO `$inst` VALUES (null, ?, ?, ?)";
-		$dbquery = $dbcon->prepare($dbquery);
-		$dbquery->bind_param("sss", $_POST['url'], $_POST['username'], $ip);
-		if (!$dbquery->execute()) httpThrow(500, "Database error");
+		if (!$dbquery = $dbcon->prepare($dbquery)) returnDatabaseError();
+		if (!$dbquery->bind_param("sss", $_POST['url'], $_POST['username'], $ip)) returnDatabaseError();
+		if (!$dbquery->execute()) returnDatabaseError();
 		
-		httpThrow(); // OK
+		returnResultJSON(200, "ok", "Gif submitted"); // OK
 		
 	} elseif ($_SERVER['REQUEST_METHOD'] == 'GET') {
-		if (!isset($_GET['inst'])) httpThrow(400, "Missing instance name");
+		if (!isset($_GET['inst'])) returnResultJSON(400, "missing-inst", "Missing instance name");
 		
 		$obj = new stdClass();
 		
 		$inst = $dbcon->escape_string($_GET['inst']);
 		$limit = isset($_GET['limit']) ? $_GET['limit'] : 10;
-		if ($limit == 0) {
-			$dbquery = "SELECT url, username FROM `$inst` ORDER BY i DESC"; // Get all
-		} else {
-			$dbquery = "SELECT url, username FROM `$inst` ORDER BY i DESC LIMIT $limit"; // Get last $limit
+		$dbquery = "SELECT url, username FROM `$inst` ORDER BY i DESC"; // Get all
+		if ($limit != 0) {
+			$dbquery .= " LIMIT $limit"; // Get last $limit
 		}
-		if (!$result = $dbcon->query($dbquery)) {
-			httpThrow(500);
-		}
+		if (!$result = $dbcon->query($dbquery)) returnDatabaseError();
 		
 		$i = 0;
 		while ($row = $result->fetch_assoc()) {
@@ -89,7 +82,7 @@
 		}
 		
 		header("Content-Type: application/json", true);
-		httpThrow(200, json_encode($obj));
+		returnOBJ(200, $obj);
 	}
 	
-	mysqli_close($dbcon);
+	$dbcon->close();
