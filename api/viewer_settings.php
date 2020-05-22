@@ -9,11 +9,10 @@
 	
 	$dbcon = connectDB();
 	$dbquery = "SELECT settings FROM `logins` WHERE username = ?";
-	$dbquery = $dbcon->prepare($dbquery);
-	$dbquery->bind_param("s", $_GET['inst']);
-	$dbquery->execute();
-	$result = $dbquery->get_result();
-	echo $result->num_rows;
+	if (!$dbquery = $dbcon->prepare($dbquery)) returnDatabaseError();
+	if (!$dbquery->bind_param("s", $_GET['inst'])) returnDatabaseError();
+	if (!$dbquery->execute()) returnDatabaseError();
+	if (!$result = $dbquery->get_result()) returnDatabaseError();
 	if ($result->num_rows == 1)
 		returnJSON(200, $result->fetch_assoc()['settings']);
 	else returnResultJSON(400, "unknown-instance", "Unknown instance id");
