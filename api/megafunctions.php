@@ -28,3 +28,7 @@
 			returnResultJSON(500, "database-error", "Database error");
 		return $dbcon;
 	}
+	
+	function returnDatabaseError() {
+		returnResultJSON(500, "database-error", "Database error");
+	}
