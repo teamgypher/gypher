@@ -36,18 +36,28 @@
 	
 	$pwhash = password_hash($data["password"], PASSWORD_BCRYPT);
 	
-	// Database and query prep
+	// Create entry in logins database
 	$dbcon = connectDB();
-	$dbquery = "INSERT INTO logins VALUES (?, ?, ?, NULL)";
+	$dbquery = "INSERT INTO logins VALUES (?, ?, ?, DEFAULT)";
 	if (!($dbquery = $dbcon->prepare($dbquery)))
-		returnResultJSON(500, "database-error", "Database error");
+		returnDatabaseError();
 	if (!($dbquery->bind_param("sss", $data["username"], $pwhash, $data["email"])))
-		returnResultJSON(500, "database-error", "Database error");
+		returnDatabaseError();
 	if (!($dbquery->execute())) {
 		if ($dbquery->errno == 1062)
 			returnResultJSON(400, "already-exists", "User already exists");
-		else returnResultJSON(500, "database-error", "Database error");
+		else returnDatabaseError();
 	}
 	$dbquery->close();
+	
+	// Create user's namespace (table)
+	$escaped = $dbcon->escape_string($data["username"]);
+	$dbquery = "CREATE TABLE `$escaped` LIKE gifs";
+	
+	if (!($dbcon->query($dbquery))) {
+		if ($dbcon->errno == 1050)
+			returnResultJSON(409, "duplicate-user", "User already exists");
+		else returnDatabaseError();
+	}
 	
 	returnResultJSON(201, "user-created", "Registration complete.");
