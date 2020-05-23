@@ -1,40 +1,52 @@
-let background;
-let viewport;
-let viewportIndex
+let settings = { // DEFAULT SETTINGS
+	"gif": {
+		"fade": 1000,
+		"duration": 10000,
+		"viewport": "fill",
+		"background": "transparent"
+	},
+	"limit": 10,
+	"text": {
+		"size": "2em",
+		"font": null
+	}
+};
 
-function updateSettings() {
-	background = false;
-	if (searchParams.has('viewport')) {
-		viewport = searchParams.get('viewport');
-		viewportIndex = ["fill", "stretch", "center"].indexOf(viewport);
-		
-		if (viewportIndex > -1) {
-			$("#videoDiv > video").css("object-fit", ["cover", "fill", "contain"][viewportIndex]);
-		}
-		
-		if (viewport === "center") {
-			if (searchParams.has('background')) {
-				background = searchParams.get("background");
-				if (background === "blur") {
-					$("#blurVideoDiv").removeAttr("hidden")
-				} else $("html, body, #videoDiv").css("background-color", background);
-			}
-		}
+let blur = false;
+let noText = false;
+
+function applySettings() {
+	let viewportIndex = Math.min(["fill", "stretch", "center"].indexOf(settings.gif.viewport), 0);
+	$("#videoDiv > video").css("object-fit", ["cover", "fill", "contain"][viewportIndex]);
+	if (viewportIndex === 2) {
+		if (settings.gif.background === "blur") {
+			$("#blurVideoDiv").removeAttr("hidden")
+			blur = true;
+		} else $("html, body, #videoDiv").css("background-color", settings.gif.background);
 	}
 	
-	if (noText) {
-		$(".content").remove();
+	noText = settings.text.size == 0;
+	let textContainer = $(".content");
+	if (noText) textContainer.remove();
+	else {
+		if (settings.text.font != null) textContainer.css("font-family", settings.text.font)
+		textContainer.css("font-size", settings.text.size);
 	}
-	
-	$('.content').css("font-family", font).css("font-size", fontsize);
 }
 
-updateSettings();
+applySettings()
+
+$.ajax("api/viewer_settings.php", {
+	success: (data, textStatus, jqXHR) => {
+		settings = jqXHR.responseJSON
+		applySettings()
+	}
+})
 
 let i = 0;
 
 function swapVideos() {
-	$.getJSON(`../api/gifs.php?limit=${limit}&inst=${instance}`, function (object) {
+	$.getJSON(`api/gifs.php?limit=${settings.limit}&inst=${instance}`, function (object) {
 		let currentSource = $(`.video${i % 2} source`);
 		let nextSource = $(`.video${(i + 1) % 2} source`);
 		
@@ -44,10 +56,10 @@ function swapVideos() {
 		nextSource.attr("src", object.results[i % object.results.length].url);
 		nextVideo[0].load();
 		
-		if (background) nextVideo[1].load();
+		if (blur) nextVideo[1].load();
 		
-		currentVideo.fadeOut(fadeDuration);
-		nextVideo.fadeIn(fadeDuration);
+		currentVideo.fadeOut(settings.gif.fade);
+		nextVideo.fadeIn(settings.gif.fade);
 		
 		if (!noText) {
 			let content = $(".content");
@@ -60,7 +72,7 @@ function swapVideos() {
 		}
 	});
 	i++;
+	setTimeout(swapVideos, Math.max(settings.gif.duration, 1000));
 }
 
-window.setInterval(swapVideos, duration);
 swapVideos();
