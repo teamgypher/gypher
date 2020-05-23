@@ -4,18 +4,18 @@ $(".form").on("submit", function (event) {
 	let data = `username=${$('#username').val()}&url=${selectedGif.images.original_mp4.mp4}&inst=${instance}`;
 	
 	let submit = $(".submit");
-	$.ajax("../api/api.php", {
+	$.ajax("../api/gifs.php", {
 		type: "POST",
 		data: data
-	}).then(function (data, statusText, xhr) {
+	}).then(function () {
 		submit.attr("value", "Sent!");
 		submit.animate({backgroundColor: "rgba(3, 255, 62, 0.3)"}, 500, function () {
 			$(this).delay(3000).animate({backgroundColor: "rgba(0, 0, 0, 0.3)"}, 500, function () {
 				$(this).attr("value", "Submit");
 			})
 		})
-	}, function (xhr, statusText, data) {
-		submit.attr("value", `Error: ${xhr.responseText}`);
+	}, function (xhr) {
+		submit.attr("value", `Error: ${xhr.responseJSON['message']}`);
 		submit.animate({backgroundColor: "rgba(255,22,39,0.3)"}, 500, function () {
 			$(this).delay(3000).animate({backgroundColor: "rgba(0, 0, 0, 0.3)"}, 500, function () {
 				$(this).attr("value", "Submit");

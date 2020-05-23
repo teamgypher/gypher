@@ -1,0 +1,4 @@
+GET http://localhost/phpstorm/api/user/account.php
+Accept: application/json
+
+###

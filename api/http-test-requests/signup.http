@@ -1,0 +1,10 @@
+POST http://localhost/phpstorm/api/user/signup.php
+Content-Type: application/json
+
+{
+  "username": "defvs",
+  "email": "defvs@gmail.com",
+  "password": "thisismypassword"
+}
+
+###

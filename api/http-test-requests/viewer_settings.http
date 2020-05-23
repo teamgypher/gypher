@@ -1,0 +1,4 @@
+GET http://localhost/phpstorm/api/viewer_settings.php?inst=defvs
+Accept: application/json
+
+###

@@ -1,5 +1,5 @@
 ### Missing instance ('inst')
-POST http://localhost/phpstorm/api/api.php
+POST http://localhost/phpstorm/api/gifs.php
 Content-Type: application/x-www-form-urlencoded
 
 username=defvs&url=https://media.giphy.com/media/YTPp28PKl42ootr8sR/giphy.mp4
@@ -7,7 +7,7 @@ username=defvs&url=https://media.giphy.com/media/YTPp28PKl42ootr8sR/giphy.mp4
 ###
 
 ### "Good" POST request
-POST http://localhost/phpstorm/api/api.php
+POST http://localhost/phpstorm/api/gifs.php
 Content-Type: application/x-www-form-urlencoded
 
 username=defvs&url=https://media.giphy.com/media/YTPp28PKl42ootr8sR/giphy.mp4&inst=gifs
@@ -15,5 +15,5 @@ username=defvs&url=https://media.giphy.com/media/YTPp28PKl42ootr8sR/giphy.mp4&in
 ###
 
 ### "Good" GET request
-GET http://localhost/phpstorm/api/api.php?inst=gifs
+GET http://localhost/phpstorm/api/gifs.php?inst=gifs
 ###
