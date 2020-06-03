@@ -10,6 +10,10 @@ RewriteRule ^.+/api/(.+)$ /phpstorm/api/$1.php [L,QSA]
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)/account(\..+)?$ /phpstorm/account/ [L,QSA,R=301]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^([a-zA-Z0-9]+)/viewer/$ viewer/index.php?inst=$1 [L,QSA]
 
 RewriteCond %{REQUEST_FILENAME} !-f
