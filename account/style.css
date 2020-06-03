@@ -23,9 +23,29 @@ main {
 }
 
 .divider {
-	height: 3px;
-	margin-left: 50%;
-	margin-right: -32px;
+	height: 5px;
+	border-top-right-radius: 12px;
+	border-bottom-right-radius: 12px;
+	border: white 1px;
+}
+
+.divider.near {
+	margin-top: -0.5rem;
+}
+
+.divider.right-aligned {
+	margin-left: 60%;
+	margin-right: -64px;
+}
+
+.divider.left-aligned {
+	margin-right: 60%;
+	margin-left: -64px;
+}
+
+.divider.fade {
+	background: linear-gradient(to right, rgba(255, 255, 255, 0), rgb(255, 255, 255));
+!important;
 }
 
 .atab {
@@ -50,6 +70,10 @@ main {
 	flex: 7 1 58%;
 }
 
+.italics {
+	font-style: italic;
+}
+
 /* ***************** */
 
 input[type="range"] {
@@ -57,26 +81,39 @@ input[type="range"] {
 }
 
 input[type="range"]::-moz-range-thumb {
-	background: mediumpurple; !important;
-	border: black; !important;
+	background: mediumpurple;
+!important;
+	border: black;
+!important;
 }
+
 input[type="range"]::-ms-thumb {
-	background: mediumpurple; !important;
-	border: black; !important;
+	background: mediumpurple;
+!important;
+	border: black;
+!important;
 }
+
 input[type="range"]::-webkit-slider-thumb {
-	background: mediumpurple; !important;
-	border: black; !important;
+	background: mediumpurple;
+!important;
+	border: black;
+!important;
 }
 
 input[type="range"] + .thumb {
-	background: mediumpurple; !important;
-	border: black; !important;
+	background: mediumpurple;
+!important;
+	border: black;
+!important;
 }
 
 input:not([type]):focus:not([readonly]), input[type="text"]:not(.browser-default):focus:not([readonly]), input[type="password"]:not(.browser-default):focus:not([readonly]), input[type="email"]:not(.browser-default):focus:not([readonly]), input[type="url"]:not(.browser-default):focus:not([readonly]), input[type="time"]:not(.browser-default):focus:not([readonly]), input[type="date"]:not(.browser-default):focus:not([readonly]), input[type="datetime"]:not(.browser-default):focus:not([readonly]), input[type="datetime-local"]:not(.browser-default):focus:not([readonly]), input[type="tel"]:not(.browser-default):focus:not([readonly]), input[type="number"]:not(.browser-default):focus:not([readonly]), input[type="search"]:not(.browser-default):focus:not([readonly]), textarea.materialize-textarea:focus:not([readonly]) {
-	border-bottom: 1px solid mediumpurple; !important;
-	-webkit-box-shadow: 0 1px 0 0 mediumpurple; !important;
-	box-shadow: 0 1px 0 0 mediumpurple; !important;
+	border-bottom: 1px solid mediumpurple;
+!important;
+	-webkit-box-shadow: 0 1px 0 0 mediumpurple;
+!important;
+	box-shadow: 0 1px 0 0 mediumpurple;
+!important;
 }
 
