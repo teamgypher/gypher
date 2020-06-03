@@ -1,0 +1,82 @@
+html {
+	font-family: "Open Sans", sans-serif;
+	font-weight: bolder;
+}
+
+html, body {
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+}
+
+body {
+	display: flex;
+	flex-direction: column;
+}
+
+main {
+	display: flex;
+	flex-flow: column nowrap;
+	align-items: stretch;
+	overflow: hidden;
+	flex-grow: 1;
+}
+
+.divider {
+	height: 3px;
+	margin-left: 50%;
+	margin-right: -32px;
+}
+
+.atab {
+	display: flex;
+	flex-flow: row nowrap;
+	align-items: stretch;
+	flex-grow: 1;
+	overflow: hidden;
+}
+
+.col-flex {
+	display: block;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+
+.col-flex.col5 {
+	flex: 5 1 42%;
+}
+
+.col-flex.col7 {
+	flex: 7 1 58%;
+}
+
+/* ***************** */
+
+input[type="range"] {
+	border: none !important;
+}
+
+input[type="range"]::-moz-range-thumb {
+	background: mediumpurple; !important;
+	border: black; !important;
+}
+input[type="range"]::-ms-thumb {
+	background: mediumpurple; !important;
+	border: black; !important;
+}
+input[type="range"]::-webkit-slider-thumb {
+	background: mediumpurple; !important;
+	border: black; !important;
+}
+
+input[type="range"] + .thumb {
+	background: mediumpurple; !important;
+	border: black; !important;
+}
+
+input:not([type]):focus:not([readonly]), input[type="text"]:not(.browser-default):focus:not([readonly]), input[type="password"]:not(.browser-default):focus:not([readonly]), input[type="email"]:not(.browser-default):focus:not([readonly]), input[type="url"]:not(.browser-default):focus:not([readonly]), input[type="time"]:not(.browser-default):focus:not([readonly]), input[type="date"]:not(.browser-default):focus:not([readonly]), input[type="datetime"]:not(.browser-default):focus:not([readonly]), input[type="datetime-local"]:not(.browser-default):focus:not([readonly]), input[type="tel"]:not(.browser-default):focus:not([readonly]), input[type="number"]:not(.browser-default):focus:not([readonly]), input[type="search"]:not(.browser-default):focus:not([readonly]), textarea.materialize-textarea:focus:not([readonly]) {
+	border-bottom: 1px solid mediumpurple; !important;
+	-webkit-box-shadow: 0 1px 0 0 mediumpurple; !important;
+	box-shadow: 0 1px 0 0 mediumpurple; !important;
+}
+
