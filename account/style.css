@@ -3,6 +3,10 @@ html {
 	font-weight: bolder;
 }
 
+* {
+	color: white; !important;
+}
+
 html, body {
 	width: 100%;
 	height: 100%;
@@ -24,8 +28,7 @@ main {
 
 .divider {
 	height: 5px;
-	border-top-right-radius: 12px;
-	border-bottom-right-radius: 12px;
+	border-radius: 8px;
 	border: white 1px;
 }
 
@@ -43,8 +46,12 @@ main {
 	margin-left: -64px;
 }
 
-.divider.fade {
-	background: linear-gradient(to right, rgba(255, 255, 255, 0), rgb(255, 255, 255));
+.divider.left-aligned.fade {
+	background: linear-gradient(to left, rgb(255, 255, 255), rgba(255, 255, 255, 0));
+!important;
+}
+.divider.right-aligned.fade {
+	background: linear-gradient(to left, rgba(255, 255, 255, 0), rgb(255, 255, 255));
 !important;
 }
 
@@ -117,3 +124,27 @@ input:not([type]):focus:not([readonly]), input[type="text"]:not(.browser-default
 !important;
 }
 
+svg.caret {
+	fill: white !important;
+}
+
+ul.select-dropdown {
+	background-color: #212121 !important;
+}
+
+.dropdown-content li > span {
+	color: white !important;
+}
+
+.select-wrapper input.select-dropdown:focus {
+	border-bottom: 2px solid #714dc6 !important;
+}
+
+[type="checkbox"].filled-in:checked + span:not(.lever)::after {
+	border: 2px solid #714dc6 !important;
+	background-color: #714dc6 !important;
+}
+
+.row {
+	margin-bottom: 0 !important;
+}

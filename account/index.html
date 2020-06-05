@@ -31,16 +31,53 @@
 	<div id="account" class="atab">
 		<div class="purple darken-4 col-flex col5">
 			<div class="container">
-				<h2 class="right-align italics">Account settings</h2>
-				<div class="divider right-aligned fade"></div>
-			
+				<div class="hide-on-med-and-down">
+					<h2 class="right-align italics">Account settings</h2>
+					<div class="divider right-aligned fade"></div>
+				</div>
 			</div>
 		</div>
 		<div class="col-flex col7 hide-on-med-and-down">
 			<div class="container">
-				<h2 class="right-align italics">Instance Settings</h2>
-				<div class="divider right-aligned fade"></div>
-			
+				<div class="hide-on-med-and-down">
+					<h2 class="right-align italics">Instance settings</h2>
+					<div class="divider right-aligned fade"></div>
+				</div>
+				<h4>Submit page styling</h4>
+				Coming soon !
+				
+				<h4>Viewer options</h4>
+				<h5>Text</h5>
+				<div class="row valign-wrapper">
+					<div class="col s6">
+						<p><label><input id="text-enabled" class="filled-in"
+										 type="checkbox"/><span>Show Text</span></label>
+						</p>
+					</div>
+					<div class="input-field col s6">
+						<select id="text-size" class="white-text">
+							<option value="1">Small</option>
+							<option value="2" selected>Medium</option>
+							<option value="3">Large</option>
+						</select>
+						<label for="text-size">Text Size</label>
+					</div>
+				</div>
+				<div class="row valign-wrapper">
+					<div class="col s6">
+						<p><label><input id="custom-font-enabled" class="filled-in"
+										 type="checkbox"/><span>Custom Font</span></label>
+						</p>
+					</div>
+					<div class="input-field col s6">
+						<input id="custom-font" type="text">
+						<label for="custom-font">Font</label>
+					</div>
+				</div>
+				<h5>Gif animations</h5>
+				<!-- TODO -->
+				<h5>View and Background</h5>
+				<!-- TODO -->
 			</div>
 		</div>
 	</div>
@@ -59,6 +96,7 @@
 <script>
 	$(function () {
 		$('.tabs').tabs();
+		$('select').formSelect();
 	})
 </script>
 </html>
