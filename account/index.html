@@ -75,7 +75,14 @@
 					</div>
 				</div>
 				<h5>Gif animations</h5>
-				<!-- TODO -->
+				<p class="range-field">
+					<label for="gif-fade">Fade duration between gifs</label>
+					<input type="range" id="gif-fade" min="0.2" max="5" step="0.2" value="1">
+				</p>
+				<p class="range-field">
+					<label for="gif-duration">Duration per gif</label>
+					<input type="range" id="gif-duration" min="2" max="30" step="1" value="10">
+				</p>
 				<h5>View and Background</h5>
 				<!-- TODO -->
 			</div>
@@ -120,6 +127,10 @@
 			customFontEnabled: $('#custom-font-enabled'),
 			customFont: $('#custom-font'),
 		},
+		gif: {
+			fade: $('#gif-fade'),
+			duration: $('#gif-duration'),
+		}
 	}
 	
 	inputs.text.enabled.on("change", event => {
@@ -156,6 +167,14 @@
 	
 	inputs.text.size.on("change", () => {
 		settings.text.size = ["1em", "2em", "5em"][inputs.text.size.val()];
+	})
+	
+	inputs.gif.fade.on("change", event => {
+		settings.gif.fade = event.target.value;
+	})
+	
+	inputs.gif.duration.on("change", event => {
+		settings.gif.duration = event.target.value;
 	})
 </script>
 </html>
