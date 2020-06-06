@@ -43,22 +43,22 @@
 					<h2 class="right-align italics">Instance settings</h2>
 					<div class="divider right-aligned fade"></div>
 				</div>
-				<h4>Submit page styling</h4>
-				Coming soon !
+				<h4>Submit form styling</h4>
+				Coming soon.
 				
 				<h4>Viewer options</h4>
 				<h5>Text</h5>
 				<div class="row valign-wrapper">
 					<div class="col s6">
-						<p><label><input id="text-enabled" class="filled-in"
+						<p><label><input checked id="text-enabled" class="filled-in"
 										 type="checkbox"/><span>Show Text</span></label>
 						</p>
 					</div>
 					<div class="input-field col s6">
 						<select id="text-size" class="white-text">
-							<option value="1">Small</option>
-							<option value="2" selected>Medium</option>
-							<option value="3">Large</option>
+							<option value="0">Small</option>
+							<option value="1" selected>Medium</option>
+							<option value="2">Large</option>
 						</select>
 						<label for="text-size">Text Size</label>
 					</div>
@@ -70,7 +70,7 @@
 						</p>
 					</div>
 					<div class="input-field col s6">
-						<input id="custom-font" type="text">
+						<input disabled id="custom-font" type="text">
 						<label for="custom-font">Font</label>
 					</div>
 				</div>
@@ -97,6 +97,65 @@
 	$(function () {
 		$('.tabs').tabs();
 		$('select').formSelect();
+	})
+	
+	let settings = {
+		gif: {
+			fade: 1000,
+			duration: 10000,
+			viewport: "fill",
+			background: "transparent"
+		},
+		limit: 10,
+		text: {
+			size: "2em",
+			font: null
+		}
+	}
+	
+	let inputs = {
+		text: {
+			enabled: $('#text-enabled'),
+			size: $('#text-size'),
+			customFontEnabled: $('#custom-font-enabled'),
+			customFont: $('#custom-font'),
+		},
+	}
+	
+	inputs.text.enabled.on("change", event => {
+		if (event.target.checked) {
+			inputs.text.size.siblings('.select-dropdown').removeAttr("disabled");
+			inputs.text.customFontEnabled.removeAttr("disabled");
+			if (inputs.text.customFontEnabled[0].checked)
+				inputs.text.customFont.removeAttr("disabled");
+			else inputs.text.customFont.attr("disabled", "");
+			
+			settings.text.size = ["1em", "2em", "5em"][inputs.text.size.val()];
+		} else {
+			inputs.text.size.siblings('.select-dropdown').attr("disabled", "");
+			inputs.text.customFontEnabled.attr("disabled", "");
+			inputs.text.customFont.attr("disabled", "");
+			
+			settings.text.size = 0;
+		}
+	})
+	
+	inputs.text.customFontEnabled.on("change", event => {
+		if (event.target.checked)
+			inputs.text.customFont.removeAttr("disabled");
+		else {
+			inputs.text.customFont.attr("disabled", "");
+			settings.text.font = null;
+		}
+	})
+	
+	inputs.text.customFont.on("input", event => {
+		if (event.target.value === "") settings.text.font = null;
+		else settings.text.font = event.target.value;
+	})
+	
+	inputs.text.size.on("change", () => {
+		settings.text.size = ["1em", "2em", "5em"][inputs.text.size.val()];
 	})
 </script>
 </html>
