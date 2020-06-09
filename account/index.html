@@ -84,11 +84,22 @@
 					<input type="range" id="gif-duration" min="2" max="30" step="1" value="10">
 				</p>
 				<h5>View and Background</h5>
-				<!-- TODO -->
+				<div class="input-field">
+					<select id="viewport" class="white-text">
+						<option value="0">Fill and crop (conserve ratio but fill view)</option>
+						<option value="1" selected>Stretch to fit (fill view by stretching the image)</option>
+						<option value="2">Center (will show transparency 'aka black bars' around the image)</option>
+					</select>
+					<label for="viewport">Viewport</label>
+				</div>
+				<div>
+					<p><label><input id="transparent-bg" class="filled-in" type="checkbox"/>
+						<span>Blurred background</span></label></p>
+				</div>
 			</div>
 		</div>
 	</div>
-	<div id="instance" class="atab">Test 2</div>
+	<div id="instance" class="atab"></div>
 </main>
 <footer class="hide-on-large-only deep-purple darken-2"
 		style="padding: 32px; display: flex; flex-flow: row nowrap; justify-content: space-evenly">
@@ -130,7 +141,11 @@
 		gif: {
 			fade: $('#gif-fade'),
 			duration: $('#gif-duration'),
-		}
+		},
+		viewport: {
+			viewport: $('#viewport'),
+			transparent: $('#transparent-bg'),
+		},
 	}
 	
 	inputs.text.enabled.on("change", event => {
@@ -176,6 +191,13 @@
 	inputs.gif.duration.on("change", event => {
 		settings.gif.duration = event.target.value * 1000;
 	})
+	
+	inputs.viewport.viewport.on("change", () => {
+		settings.gif.viewport = ["fill", "stretch", "center"][inputs.viewport.viewport.val()];
+	})
+	
+	inputs.viewport.transparent.on("change", event => {
+		settings.gif.background = event.target.checked ? "blur" : "transparent";
 	})
 </script>
 </html>
