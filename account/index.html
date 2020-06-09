@@ -170,11 +170,12 @@
 	})
 	
 	inputs.gif.fade.on("change", event => {
-		settings.gif.fade = event.target.value;
+		settings.gif.fade = event.target.value * 1000;
 	})
 	
 	inputs.gif.duration.on("change", event => {
-		settings.gif.duration = event.target.value;
+		settings.gif.duration = event.target.value * 1000;
+	})
 	})
 </script>
 </html>
