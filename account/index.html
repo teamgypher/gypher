@@ -17,7 +17,7 @@
 				<li><a class="btn-large waves-effect waves-light grey darken-3" target="_blank"
 					   href="https://google.com"><i
 						class="material-icons right">launch</i> Submit form</a></li>
-				<li><a class="btn-large waves-effect waves-light grey darken-3"><i class="material-icons right">featured_video</i>
+				<li><a href="#obs-install-modal" class="btn-large waves-effect waves-light grey darken-3 modal-trigger"><i class="material-icons right">featured_video</i>
 					Add to OBS</a></li>
 			</ul>
 		</div>
@@ -86,8 +86,8 @@
 				<h5>View and Background</h5>
 				<div class="input-field">
 					<select id="viewport" class="white-text">
-						<option value="0">Fill and crop (conserve ratio but fill view)</option>
-						<option value="1" selected>Stretch to fit (fill view by stretching the image)</option>
+						<option value="0" selected>Fill and crop (conserve ratio but fill view)</option>
+						<option value="1">Stretch to fit (fill view by stretching the image)</option>
 						<option value="2">Center (will show transparency 'aka black bars' around the image)</option>
 					</select>
 					<label for="viewport">Viewport</label>
@@ -100,6 +100,30 @@
 		</div>
 	</div>
 	<div id="instance" class="atab"></div>
+	<div id="obs-install-modal" class="modal grey darken-4">
+		<div class="modal-content">
+			<h4>Adding Gypher to your stream</h4>
+			<p>Easy! Copy the URL down below and add it as a Browser Source in OBS or their derivatives (StreamLabs OBS,
+				OBSLive...)</p>
+			<div class="row valign-wrapper">
+				<div class="col s2 m1">
+					<a onclick="copyUrl()" class="waves-effect waves-light btn deep-purple darken-2"><i class="material-icons">content_copy</i></a>
+				</div>
+				<div class="input-field col s10">
+					<input readonly id="viewer-url" type="text">
+					<label for="viewer-url">URL to paste</label>
+				</div>
+			</div>
+			<div class="row valign-wrapper">
+				<div class="col s12 m6">
+					<img class="responsive-img materialboxed" src="obs-help1.jpg">
+				</div>
+				<div class="col s12 m6">
+					<img class="responsive-img materialboxed" src="obs-help2.jpg">
+				</div>
+			</div>
+		</div>
+	</div>
 </main>
 <footer class="hide-on-large-only deep-purple darken-2"
 		style="padding: 32px; display: flex; flex-flow: row nowrap; justify-content: space-evenly">
@@ -115,7 +139,16 @@
 	$(function () {
 		$('.tabs').tabs();
 		$('select').formSelect();
+		$('.modal').modal();
+		$('.materialboxed').materialbox();
 	})
+	
+	function copyUrl() {
+		let copyText = $('#viewer-url')[0];
+		copyText.select();
+		copyText.setSelectionRange(0,10000);
+		document.execCommand("copy");
+	}
 	
 	let settings = {
 		gif: {
